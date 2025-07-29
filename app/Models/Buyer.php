@@ -2,12 +2,12 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Model;
 
 class Buyer extends User
 {
     //
-    public function transactions(): HasMany
+    public function transactions()
     {
         return $this->hasMany(Transaction::class);
     }

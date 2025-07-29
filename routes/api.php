@@ -16,7 +16,7 @@ Route::get('/user', function (Request $request) {
 
 
 //خریدار
-Route::resource('buyers', BuyerController::class, ['only' => 'show', 'index']);
+Route::resource('buyers', BuyerController::class, ['show', 'index']);
 
 //دسته بندی
 Route::resource('categories', CategoryController::class, ['except' => 'create', 'edit']);

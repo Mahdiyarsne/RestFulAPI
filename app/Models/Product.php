@@ -29,19 +29,19 @@ class Product extends Model
         return $this->status == Product::AVAILABLE_PRODUCT;
     }
 
-    public function seller(): BelongsTo
+    public function seller()
     {
 
         return $this->belongsTo(Seller::class);
     }
 
-    public function tranaction(): HasMany
+    public function tranaction()
     {
 
         return $this->hasMany(Transaction::class);
     }
 
-    public function categories(): BelongsToMany
+    public function categories()
     {
 
         return $this->belongsToMany(Category::class);
