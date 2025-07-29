@@ -1,5 +1,11 @@
 <?php
 
+use App\Http\Controllers\User\UserController;
+use App\Http\Controllers\Buyer\BuyerController;
+use App\Http\Controllers\Category\CategoryController;
+use App\Http\Controllers\Product\ProductController;
+use App\Http\Controllers\Seller\SellerController;
+use App\Http\Controllers\Transaction\TransactionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -10,19 +16,19 @@ Route::get('/user', function (Request $request) {
 
 
 //خریدار
-Route::resource('buyers', 'Buyer\BuyerController', ['only' => 'show', 'index']);
+Route::resource('buyers', BuyerController::class, ['only' => 'show', 'index']);
 
 //دسته بندی
-Route::resource('categories', 'Category\CategoryController', ['except' => 'create', 'edit']);
+Route::resource('categories', CategoryController::class, ['except' => 'create', 'edit']);
 
 //محصولات
-Route::resource('products', 'Product\ProductController', ['only' => 'show', 'index']);
+Route::resource('products', ProductController::class, ['only' => 'show', 'index']);
 
 //فروشنده ها
-Route::resource('sellers', 'Seller\SellerController', ['only' => 'show', 'index']);
+Route::resource('sellers', SellerController::class, ['only' => 'show', 'index']);
 
 //پرداخت ها
-Route::resource('transactions', 'Transaction\TransactionController', ['only' => 'show', 'index']);
+Route::resource('transactions', TransactionController::class, ['only' => 'show', 'index']);
 
 //کاربران
-Route::resource('users', 'User\UserController', ['only' => 'show', 'index']);
+Route::resource('users', UserController::class, ['except' => 'create', 'edit']);
