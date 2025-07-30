@@ -16,19 +16,19 @@ Route::get('/user', function (Request $request) {
 
 
 //خریدار
-Route::resource('buyers', BuyerController::class, ['show', 'index']);
+Route::resource('buyers', BuyerController::class, ['only' => ['show', 'index']]);
 
 //دسته بندی
-Route::resource('categories', CategoryController::class, ['except' => 'create', 'edit']);
+Route::resource('categories', CategoryController::class, ['except' => ['create', 'edit']]);
 
 //محصولات
-Route::resource('products', ProductController::class, ['only' => 'show', 'index']);
+Route::resource('products', ProductController::class, ['only' => ['show', 'index']]);
 
 //فروشنده ها
-Route::resource('sellers', SellerController::class, ['only' => 'show', 'index']);
+Route::resource('sellers', SellerController::class, ['only' => ['show', 'index']]);
 
 //پرداخت ها
-Route::resource('transactions', TransactionController::class, ['only' => 'show', 'index']);
+Route::resource('transactions', TransactionController::class, ['only' => ['show', 'index']]);
 
 //کاربران
-Route::resource('users', UserController::class, ['except' => 'create', 'edit']);
+Route::resource('users', UserController::class, ['except' => ['create', 'edit']]);
