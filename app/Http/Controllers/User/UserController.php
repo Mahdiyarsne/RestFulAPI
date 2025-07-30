@@ -17,6 +17,7 @@ class UserController extends ApiController
     {
         //
         $users = User::all();
+
         return $this->showAll($users);
     }
 
@@ -54,10 +55,18 @@ class UserController extends ApiController
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(User $user)
     {
         //
-        $user = User::findOrFail($id);
+
+
+        if (!$user) {
+            return response()->json([
+                'status' => 'ناموفق',
+                'code' => 404,
+                'message' => 'کاربری با این مشخصات یافت نشد'
+            ], 404);
+        }
         return $this->showOne($user);
     }
 
@@ -65,10 +74,17 @@ class UserController extends ApiController
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, User $user)
     {
         //
-        $user = User::findOrFail($id);;
+
+        if (!$user) {
+            return response()->json([
+                'status' => 'ناموفق',
+                'code' => 404,
+                'message' => 'کاربری با این مشخصات یافت نشد'
+            ], 404);
+        }
 
         $rules = [
             'email' => 'email|unique:users,email,' . $user->id,
@@ -114,12 +130,16 @@ class UserController extends ApiController
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(User $user)
     {
-        //
 
-        $user = User::findOrFail($id);
-
+        if (!$user) {
+            return response()->json([
+                'status' => 'ناموفق',
+                'code' => 404,
+                'message' => 'کاربری با این مشخصات یافت نشد'
+            ], 404);
+        }
         $user->delete();
         return $this->showOne($user);
     }
