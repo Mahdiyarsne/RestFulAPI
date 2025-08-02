@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Category;
 use App\Http\Controllers\ApiController;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class CategoryController extends ApiController
 {
@@ -25,6 +26,21 @@ class CategoryController extends ApiController
     public function store(Request $request)
     {
         //
+        $validator = Validator::make(data: $request->all(), rules: [
+            'name' => 'required',
+            'description' => 'required'
+        ]);
+        if ($validator->fails()) {
+            return response()->json([
+                'sataus' => 'ناموفق',
+                'message' => $validator->errors()
+            ], 400);
+        }
+
+        $data = $request->all();
+        $newCategory = Category::create($data);
+
+        return $this->showOne($newCategory, 201);
     }
 
     /**
@@ -42,6 +58,18 @@ class CategoryController extends ApiController
     public function update(Request $request, Category $category)
     {
         //
+        $category->fill($request->only([
+            'name',
+            'description'
+        ]));
+
+        if ($category->isClean()) {
+            return $this->errorResponse('شما باید یک تغییری انجام بدی تا اسم و توضیحات تغییر کند', 422);
+        }
+
+        $category->save();
+
+        return $this->showOne($category);
     }
 
     /**
@@ -50,5 +78,7 @@ class CategoryController extends ApiController
     public function destroy(Category $category)
     {
         //
+        $category->delete();
+        return $this->showOne($category);
     }
 }
