@@ -7,13 +7,17 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
     //
+
     const AVAILABLE_PRODUCT = 'available';
     const UNAVAILABLE_PRODUCT = 'unavailable';
+
+    protected $dates = ['deleted_at'];
 
     protected $fillable = [
         'name',
@@ -29,19 +33,19 @@ class Product extends Model
         return $this->status == Product::AVAILABLE_PRODUCT;
     }
 
-    public function seller()
+    public function seller(): BelongsTo
     {
 
         return $this->belongsTo(Seller::class);
     }
 
-    public function tranaction()
+    public function tranaction(): HasMany
     {
 
         return $this->hasMany(Transaction::class);
     }
 
-    public function categories()
+    public function categories(): BelongsToMany
     {
 
         return $this->belongsToMany(Category::class);

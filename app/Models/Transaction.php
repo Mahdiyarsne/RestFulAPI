@@ -3,14 +3,17 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Transaction extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     //
+
+    protected $dates = ['deleted_at'];
 
     protected $fillable = [
         'quantity',
@@ -19,7 +22,7 @@ class Transaction extends Model
     ];
 
 
-    public function buyer()
+    public function buyer(): BelongsTo
     {
 
         return $this->belongsTo(Buyer::class);
