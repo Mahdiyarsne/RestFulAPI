@@ -55,11 +55,10 @@ class UserController extends ApiController
     /**
      * Display the specified resource.
      */
-    public function show(User $user)
+    public function show(int $id)
     {
         //
-
-
+        $user =  User::find($id);
         if (!$user) {
             return response()->json([
                 'status' => 'ناموفق',
@@ -74,10 +73,10 @@ class UserController extends ApiController
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, int $id)
     {
         //
-
+        $user =  User::find($id);
         if (!$user) {
             return response()->json([
                 'status' => 'ناموفق',
@@ -130,8 +129,10 @@ class UserController extends ApiController
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(User $user)
+    public function destroy(int $id)
     {
+
+        $user = User::find($id);
 
         if (!$user) {
             return response()->json([

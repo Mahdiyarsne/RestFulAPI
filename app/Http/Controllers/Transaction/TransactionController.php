@@ -14,6 +14,7 @@ class TransactionController extends ApiController
     public function index()
     {
         $transactions = Transaction::all();
+
         return $this->showAll($transactions);
     }
 
@@ -21,10 +22,18 @@ class TransactionController extends ApiController
     /**
      * Display the specified resource.
      */
-    public function show(Transaction $transaction)
+    public function show(int $id)
     {
-        //
 
+        $transaction = Transaction::find($id);
+        //
+        if (!$transaction) {
+            return response()->json([
+                'status' => 'ناموفق',
+                'code' => 404,
+                'message' => 'پرداختی یافت نشد'
+            ], 404);
+        }
         return $this->showOne($transaction);
     }
 }

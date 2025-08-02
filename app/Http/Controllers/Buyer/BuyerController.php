@@ -23,7 +23,15 @@ class BuyerController extends ApiController
     public function show(string $id)
     {
         //
-        $buyer = Buyer::has('transactions')->findOrFail($id);
+        $buyer = Buyer::has('transactions')->find($id);
+        if (!$buyer) {
+
+            return response()->json([
+                'status' => 'ناموفق',
+                'code' => 404,
+                'message' => 'یافت نشد دوباره تلاش کنید'
+            ], 404);
+        }
         return $this->showOne($buyer);
     }
 }

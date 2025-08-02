@@ -14,6 +14,7 @@ class SellerController extends ApiController
     {
         //
         $sellers = Seller::has('products')->get();
+
         return $this->showAll($sellers);
     }
     /**
@@ -22,7 +23,14 @@ class SellerController extends ApiController
     public function show(string $id)
     {
         //
-        $seller = Seller::has('products')->findOrFail($id);
+        $seller = Seller::has('products')->find($id);
+        if (!$seller) {
+            return response()->json([
+                'status' => 'ناموفق',
+                'code' => 404,
+                'Message' => 'یافت نشد'
+            ], 404);
+        }
         return $this->showOne($seller);
     }
 }

@@ -46,8 +46,17 @@ class CategoryController extends ApiController
     /**
      * Display the specified resource.
      */
-    public function show(Category $category)
+    public function show(int $id)
     {
+        $category = Category::find($id);
+        if (!$category) {
+            return response()->json([
+                'status' => 'ناموفق',
+                'code' => 404,
+                'message' => 'دسته بندی یافت نشد',
+            ], 404);
+        }
+
         return $this->showOne($category);
     }
 
@@ -75,9 +84,19 @@ class CategoryController extends ApiController
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Category $category)
+    public function destroy(int $id)
     {
+
+        $category = Category::find($id);
+        if (!$category) {
+            return response()->json([
+                'status' => 'ناموفق',
+                'code' => 404,
+                'message' => 'دسته بندی یافت نشد',
+            ], 404);
+        }
         //
+
         $category->delete();
         return $this->showOne($category);
     }

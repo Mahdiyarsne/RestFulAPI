@@ -23,9 +23,18 @@ class ProductController extends ApiController
     /**
      * Display the specified resource.
      */
-    public function show(Product $product)
+    public function show(int $id)
     {
         //
+        $product = Product::find($id);
+        if (!$product) {
+            return response()->json([
+                'status' => 'ناموفق',
+                'code' => 404,
+                'message' => 'محصولی یافت نشد'
+            ], 404);
+        }
+
 
         return $this->showOne($product);
     }
