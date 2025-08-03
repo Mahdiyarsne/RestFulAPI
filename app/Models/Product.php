@@ -18,6 +18,7 @@ class Product extends Model
     const UNAVAILABLE_PRODUCT = 'unavailable';
 
     protected $dates = ['deleted_at'];
+    protected $hidden = ['pivot'];
 
     protected $fillable = [
         'name',
@@ -39,7 +40,7 @@ class Product extends Model
         return $this->belongsTo(Seller::class);
     }
 
-    public function tranaction(): HasMany
+    public function transactions(): HasMany
     {
 
         return $this->hasMany(Transaction::class);

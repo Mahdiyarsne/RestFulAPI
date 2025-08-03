@@ -3,6 +3,10 @@
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\Buyer\BuyerController;
 use App\Http\Controllers\Category\CategoryController;
+use App\Http\Controllers\Category\CategoryProductController;
+use App\Http\Controllers\Category\CategorySellerController;
+use App\Http\Controllers\Category\CategoryTransactionController;
+use App\Http\Controllers\Category\CategoryBuyerController;
 use App\Http\Controllers\Product\ProductController;
 use App\Http\Controllers\Seller\SellerController;
 use App\Http\Controllers\Transaction\TransactionController;
@@ -24,6 +28,10 @@ Route::resource('buyers', BuyerController::class, ['only' => ['show', 'index']])
 
 //دسته بندی
 Route::resource('categories', CategoryController::class, ['except' => ['create', 'edit']]);
+Route::resource('categories.products', CategoryProductController::class, ['only' => ['index']]);
+Route::resource('categories.sellers', CategorySellerController::class, ['only' => ['index']]);
+Route::resource('categories.transactions', CategoryTransactionController::class, ['only' => ['index']]);
+Route::resource('categories.buyers', CategoryBuyerController::class, ['only' => ['index']]);
 
 //محصولات
 Route::resource('products', ProductController::class, ['only' => ['show', 'index']]);
