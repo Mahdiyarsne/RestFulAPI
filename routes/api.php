@@ -2,6 +2,10 @@
 
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\Buyer\BuyerController;
+use App\Http\Controllers\Buyer\BuyerProductController;
+use App\Http\Controllers\Buyer\BuyerSellerController;
+use App\Http\Controllers\Buyer\BuyerCategoryController;
+use App\Http\Controllers\Buyer\BuyerTransactionController;
 use App\Http\Controllers\Category\CategoryController;
 use App\Http\Controllers\Category\CategoryProductController;
 use App\Http\Controllers\Category\CategorySellerController;
@@ -25,6 +29,10 @@ Route::get('/user', function (Request $request) {
 
 //خریدار
 Route::resource('buyers', BuyerController::class, ['only' => ['show', 'index']]);
+Route::resource('buyers.sellers', BuyerSellerController::class, ['only' => ['index']]);
+Route::resource('buyers.products', BuyerProductController::class, ['only' => ['index']]);
+Route::resource('buyers.categories', BuyerCategoryController::class, ['only' => ['index']]);
+Route::resource('buyers.transactions', BuyerTransactionController::class, ['only' => ['index']]);
 
 //دسته بندی
 Route::resource('categories', CategoryController::class, ['except' => ['create', 'edit']]);
