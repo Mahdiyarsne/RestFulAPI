@@ -114,7 +114,7 @@ class SellerProductController extends ApiController
             return response()->json([
                 'status' => 'ناموفق',
                 'code' => 404,
-                'message' => 'فروشنده یافت نشد.دوباره تلاش کنید.'
+                'message' => 'محصول یافت نشد.دوباره تلاش کنید.'
             ], 404);
         }
 
