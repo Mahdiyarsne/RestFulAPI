@@ -6,12 +6,14 @@ use App\Http\Controllers\ApiController;
 use App\Models\Product;
 use App\Models\Seller;
 use App\Models\User;
+use App\Traits\FileUploadTraits;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class SellerProductController extends ApiController
 {
+    use FileUploadTraits;
     /**
      * Display a listing of the resource.
      */
@@ -52,9 +54,11 @@ class SellerProductController extends ApiController
             ], 400);
         }
 
+
         $data = $request->all();
         $data['status'] = Product::UNAVAILABLE_PRODUCT;
-        $data['image'] = '1.jpg';
+        $imagePath = $this->uploadImage($request, 'image');
+        $data['image'] = isset($imagePath) ? $imagePath : '';
         $data['seller_id'] = $seller->id;
 
         $product = Product::create($data);
@@ -95,6 +99,13 @@ class SellerProductController extends ApiController
             }
         }
 
+        if ($request->hasFile('image')) {
+            $this->removeImage($product->image);
+
+            $imagePath = $this->uploadImage($request, 'image');
+            $product->image = isset($imagePath) ? $imagePath : '';
+        }
+
         if ($product->isClean()) {
             return $this->errorResponse('You need to change some values to update', 422);
         }
@@ -120,6 +131,7 @@ class SellerProductController extends ApiController
 
         $this->checkeSeller($seller, $product);
         $product->delete();
+        $this->removeImage($product->image);
         return $this->showOne($product);
     }
 
