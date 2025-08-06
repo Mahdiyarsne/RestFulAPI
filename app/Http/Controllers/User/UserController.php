@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\ApiController;
+use App\Mail\UserCreated;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 class UserController extends ApiController
 {
@@ -97,7 +99,7 @@ class UserController extends ApiController
 
         if ($request->has('email') && $user->email != $request->email) {
             $user->verified = User::VERIFIED_USER;
-            $user->verfication_token = User::generateVerifiactionCode();
+            $user->verification_token = User::generateVerifiactionCode();
             $user->email = $request->email;
         }
 
@@ -143,5 +145,29 @@ class UserController extends ApiController
         }
         $user->delete();
         return $this->showOne($user);
+    }
+
+    public function verify($token)
+    {
+
+        $user = User::where('verification_token', $token)->firstOrFail();
+
+        $user->verified = User::VERIFIED_USER;
+        $user->verification_token = null;
+
+        $user->save();
+
+        return $this->showMessage('اکانت تایید شده است');
+    }
+
+    public function resend(User $user)
+    {
+        if ($user->isVerified()) {
+            return $this->errorResponse('کاربر از قبل تایید شده است.', 409);
+        }
+
+        Mail::to($user->email)->queue(new UserCreated($user));
+
+        return $this->showMessage('ارسال تاییدایمیل فرستاده شد.');
     }
 }

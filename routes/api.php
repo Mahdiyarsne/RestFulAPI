@@ -71,3 +71,5 @@ Route::resource('transactions.categories', TransactionCategoryController::class,
 Route::resource('transactions.sellers', TransactionSellerController::class, ['only' => ['index']]);
 //کاربران
 Route::resource('users', UserController::class, ['except' => ['create', 'edit']]);
+Route::name('verify')->get('users/verify/{token}', [UserController::class, 'verify']);
+Route::name('resend')->get('users/{user}/resend', [UserController::class, 'resend']);
