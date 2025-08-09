@@ -1,6 +1,7 @@
 <?php
 
 use App\Exceptions\Handler;
+use App\Http\Middleware\SignatureMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -14,6 +15,13 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware): void {
         //
+        $middleware->alias([
+            'signature' => SignatureMiddleware::class,
+        ]);
+
+        $middleware->api([
+            'signature:X-Application-name'
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
