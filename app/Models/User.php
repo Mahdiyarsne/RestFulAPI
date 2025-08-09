@@ -3,6 +3,8 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use App\Transformers\UserTransformer;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -27,8 +29,8 @@ class User extends Authenticatable
      * @var list<string>
      */
 
+    public $transformer = UserTransformer::class;
     protected $dates = ['deleted_at'];
-
     protected $table = 'users';
 
     protected $fillable = [

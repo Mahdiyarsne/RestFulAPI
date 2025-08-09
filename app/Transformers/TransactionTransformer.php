@@ -37,9 +37,27 @@ class TransactionTransformer extends TransformerAbstract
             'quantity' => (int) $transaction->quantity,
             'buyer' => (int) $transaction->buyer_id,
             'product' => (int) $transaction->product_id,
-            'creationDate' => $transaction->created_at,
-            'lastChange' => $transaction->updated_at,
+            'creationDate' => (string)$transaction->created_at,
+            'lastChange' => (string)$transaction->updated_at,
             'deletedDate' => isset($transaction->deleted_at) ? (string) $transaction->deleted_at : null,
         ];
+    }
+
+
+    public static function originalAttribute($index)
+    {
+
+        $attributs = [
+            'identifier' => 'id',
+            'quantity' => 'quantity',
+            'buyer' => 'buyer_id',
+            'product' => 'product_id',
+            'creationDate' => 'created_at',
+            'lastChange' => 'updated_at',
+            'deletedDate' => 'deleted_at',
+
+        ];
+
+        return isset($attributs[$index]) ? $attributs[$index] : null;
     }
 }
