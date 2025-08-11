@@ -3,20 +3,32 @@
 namespace App\Http\Controllers\Seller;
 
 use App\Http\Controllers\ApiController;
+use App\Http\Middleware\TransformInput;
 use App\Models\Product;
 use App\Models\Seller;
 use App\Models\User;
 use App\Traits\FileUploadTraits;
+use App\Transformers\ProductTransformer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Illuminate\Routing\Controllers\Middleware;
 
 class SellerProductController extends ApiController
 {
     use FileUploadTraits;
+
+    public function __construct()
+    {
+
+        $this->middleware('transform.input:' . ProductTransformer::class)->only(['store', 'update']);
+    }
+
     /**
      * Display a listing of the resource.
      */
+
+
     public function index(int $id)
     {
         //

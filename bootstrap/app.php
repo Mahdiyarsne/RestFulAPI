@@ -2,6 +2,7 @@
 
 use App\Exceptions\Handler;
 use App\Http\Middleware\SignatureMiddleware;
+use App\Http\Middleware\TransformInput;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -17,6 +18,7 @@ return Application::configure(basePath: dirname(__DIR__))
         //
         $middleware->alias([
             'signature' => SignatureMiddleware::class,
+            'transform.input' => TransformInput::class
         ]);
 
         $middleware->api([
