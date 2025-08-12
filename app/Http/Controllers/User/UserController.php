@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\ApiController;
-use App\Http\Middleware\TransformInput;
 use App\Mail\UserCreated;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
@@ -11,7 +10,6 @@ use App\Models\User;
 use App\Transformers\UserTransformer;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Routing\Controllers\Middleware;
 
 class UserController extends ApiController
 {
@@ -63,6 +61,11 @@ class UserController extends ApiController
         $user = User::Create($data);
 
         return $this->showOne($user, 201);
+    }
+
+    public function showRegisterForm()
+    {
+        return view('auth.register');
     }
 
     /**
