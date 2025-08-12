@@ -59,7 +59,7 @@ class SellerProductController extends ApiController
             'image' => 'required|image'
         ]);
 
-        if ($validator->fails()) {
+        if ($validator->failed()) {
             return response()->json([
                 'status ' => 'ناموفق',
                 'message' => $validator->errors()

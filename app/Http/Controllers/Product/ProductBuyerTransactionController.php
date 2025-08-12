@@ -32,7 +32,7 @@ class ProductBuyerTransactionController extends ApiController
             'quantity' => 'required|integer|min:1'
         ]);
 
-        if ($validator->fails()) {
+        if ($validator->failed()) {
             return response()->json([
                 'status' => 'ناموفق',
                 'message' => $validator->errors()

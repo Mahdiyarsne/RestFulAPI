@@ -39,7 +39,7 @@ class CategoryController extends ApiController
             'name' => 'required',
             'description' => 'required'
         ]);
-        if ($validator->fails()) {
+        if ($validator->failed()) {
             return response()->json([
                 'sataus' => 'ناموفق',
                 'message' => $validator->errors()

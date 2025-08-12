@@ -39,13 +39,13 @@ class UserController extends ApiController
     public function store(Request $request)
     {
         //
-        $validator = Validator::make(data: $request->all(), rules: [
+        $validator = Validator::make($request->all(), rules: [
             'name' => 'required',
             'email' => 'required|email|unique:users',
-            'password' => 'required|min:6'
+            'password' => 'required|min:3'
         ]);
 
-        if ($validator->fails()) {
+        if ($validator->failed()) {
             return response()->json([
                 'status' => 'fail',
                 'message' => $validator->errors()
@@ -53,7 +53,7 @@ class UserController extends ApiController
         }
 
         $data = $request->all();
-        $data['password'] = Hash::make($data['password']);
+        $data['password'] = Hash::make($request->password);
         $data['verified'] = User::UNVERIFIED_USER;
         $data['verifiaction_token'] = User::generateVerifiactionCode();
         $data['admin'] = User::REGULAR_USER;

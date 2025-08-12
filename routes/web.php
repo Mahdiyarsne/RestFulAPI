@@ -7,8 +7,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('login', 'App\Http\Controllers\Auth\LoginController@showLoginForm')->name('login');
 Route::post('login', 'App\Http\Controllers\Auth\LoginController@login');
 Route::get('logout', 'App\Http\Controllers\Auth\LoginController@logout')->name('logout');
-Route::get('register', 'App\Http\Controllers\User\UserController@showRegisterForm')->name('register')->middleware('guest');
-Route::post('register', 'App\Http\Controllers\User\UserController@store')->middleware('guest');
 
 
 // Password Reset Routes...
@@ -25,4 +23,4 @@ Route::get('/home', 'App\Http\Controllers\HomeController@index');
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->middleware('guest');
