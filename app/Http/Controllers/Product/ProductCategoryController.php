@@ -8,7 +8,13 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 
 class ProductCategoryController extends ApiController
+
 {
+    public function __construct()
+    {
+        $this->middleware('auth:api')->except(['index']);
+    }
+
     /**
      * Display a listing of the resource.
      */

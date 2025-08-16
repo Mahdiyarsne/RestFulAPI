@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 
 class BuyerCategoryController extends ApiController
 {
+
+    
     /**
      * Display a listing of the resource.
      */

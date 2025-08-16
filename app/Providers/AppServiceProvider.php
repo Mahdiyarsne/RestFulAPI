@@ -6,9 +6,11 @@ use App\Mail\UserCreated;
 use App\Mail\UserMailChanged;
 use App\Models\Product;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
+use Laravel\Passport\Passport;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -25,6 +27,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+
+        Passport::tokensExpireIn(Carbon::now()->addMinute(30));
+        Passport::refreshTokensExpireIn(Carbon::now()->addDays(30));
+        
+
         //
         Schema::defaultStringLength(191);
 
